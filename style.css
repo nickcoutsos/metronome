@@ -1,0 +1,267 @@
+html, body {
+	height: 100%;
+}
+
+body {
+	background: #cde;
+	font-family: sans-serif;
+	font-size: 16px;
+	margin: 0px;
+	padding: 0px;
+}
+
+#header {
+	margin: 0px;
+}
+
+#header h1 {
+	font-weight: lighter;
+	background: #eed;
+	border-bottom: 3px solid #444;
+	margin: 0px;
+	padding: 5px 10px;
+}
+
+#content {
+	overflow: hidden;
+	padding: 0px 10px;
+	margin: 0px;
+	border: none;
+	background: #404455;
+	/*url(http://dev.coutsos.com/metronome/random_grey_variations.png);*/
+}
+#content>p {
+	color: #eee;
+}
+
+#footer {
+	position: absolute;
+	bottom: 0px;
+	display: block;
+	width: 100%;
+	font-style: italic;
+	font-size: 9px;
+	text-align: center;
+	color: #555;
+	
+	background: -webkit-linear-gradient(bottom, #CDE 0%, #E6EEF7 70%);
+	background: -moz-linear-gradient(to top, #CDE 0%, #E6EEF7 70%);
+	background: -o-linear-gradient(bottom, #CDE 0%, #E6EEF7 70%);
+	background: linear-gradient(to top, #CDE 0%, #E6EEF7 70%);
+	
+	border-top: 2px solid #EFEFFF;
+	box-shadow: 0px 10px 40px -5px;
+}
+
+#footer a {
+	color: #558;
+}
+
+.metronome {
+	position: relative;
+	width: 275px;
+	height: 275px;
+	margin: 25px auto;
+	
+	background: -webkit-radial-gradient(25% 20%, ellipse cover, #E6EEF7 0%,#CDE 93%);
+	background: -moz-radial-gradient(25% 20%, ellipse cover, #E6EEF7 0%,#CDE 93%);
+	background: -o-radial-gradient(25% 20%, ellipse cover, #E6EEF7 0%,#CDE 93%);
+	background: radial-gradient(25% 20%, ellipse cover, #E6EEF7 0%,#CDE 93%);
+	
+	border-top: 1px solid #def;
+	border-left: 1px solid #def;
+	border-right: 1px solid #bcd;
+	border-bottom: 1px solid #bcd;
+	
+	-webkit-border-radius: 12px;
+	-moz-border-radius: 12px;
+	border-radius: 12px;
+	
+	box-shadow: 2px 2px 55px -10px;
+}
+
+.meter {
+	position: relative;
+	left: 50%;
+	top: -15%;
+	overflow: hidden;
+	
+	width: 60%;
+	height: 60%;
+	margin: 0px;
+	border: .3em solid #bcd;
+	
+	background: -webkit-radial-gradient(bottom right, circle cover, hsl(210, 14%, 82%), hsl(210, 14%, 64%) 70%);
+	background: -moz-radial-gradient(bottom right, circle cover, hsl(210, 14%, 82%), hsl(210, 14%, 64%) 70%);
+	background: -o-radial-gradient(bottom right, circle cover, hsl(210, 14%, 82%), hsl(210, 14%, 64%) 70%);
+	background: radial-gradient(bottom right, circle cover, hsl(210, 14%, 82%), hsl(210, 14%, 64%) 70%);
+	
+	-webkit-border-radius: 95% 0 0 0;
+	-webkit-transform: rotate(45deg);
+	-webkit-transform-origin: 0 0;
+	-webkit-box-shadow: 3px 3px 15px -5px inset;
+	
+	-moz-border-radius: 98% 0 0 0;
+	-moz-transform: rotate(45deg);
+	-moz-transform-origin: 0 0;
+	-moz-box-shadow: 3px 3px 15px -5px inset;
+	
+	-o-border-radius: 95% 0 0 0;
+	-o-transform: rotate(45deg);
+	-o-transform-origin: 0 0;
+	-o-box-shadow: 3px 3px 15px -5px inset;
+	
+	border-radius: 98% 0 0 0;
+	transform: rotate(45deg);
+	transform-origin: 0 0;
+	box-shadow: .3em .3em 1.3em -.4em inset;
+}
+
+.needle {
+	display: none;
+	position: absolute;
+	bottom: -1.5%;
+	right: 0px;
+	
+	background: gray;
+	width: 95%;
+	height: 3%;
+	border-left: 2px solid #FFAA00;
+}
+
+.needle-beat {
+	background: #FF0000;
+}
+
+.needle-animating {
+	display: block;
+	
+	-webkit-animation-name: needle-tick;
+	-webkit-animation-duration: 1.5s;
+	-webkit-animation-direction: alternate;
+	-webkit-animation-play-state: running;
+	-webkit-animation-iteration-count: infinite;
+	-webkit-animation-timing-function: ease-in-out;
+	
+	-moz-animation-name: needle-tick;
+	-moz-animation-duration: 1.5s;
+	-moz-animation-direction: alternate;
+	-moz-animation-play-state: running;
+	-moz-animation-iteration-count: infinite;
+	-moz-animation-timing-function: ease-in-out;
+	
+	-o-animation-name: needle-tick;
+	-o-animation-duration: 1.5s;
+	-o-animation-direction: alternate;
+	-o-animation-play-state: running;
+	-o-animation-iteration-count: infinite;
+	-o-animation-timing-function: ease-in-out;
+	
+	animation-name: needle-tick;
+	animation-duration: 1.5s;
+	animation-direction: alternate;
+	animation-play-state: running;
+	animation-iteration-count: infinite;
+	animation-timing-function: ease-in-out;
+}
+
+@-webkit-keyframes needle-tick {
+	0% {
+		-webkit-transform: rotate(0deg);
+		-webkit-transform-origin: 100% 50%;
+	}
+	100% {
+		-webkit-transform: rotate(90deg);
+		-webkit-transform-origin: 100% 50%;
+	}
+}
+
+@-moz-keyframes needle-tick {
+	0% {
+		-moz-transform: rotate(0deg);
+		-moz-transform-origin: 100% 50%;
+	}
+	100% {
+		-moz-transform: rotate(90deg);
+		-moz-transform-origin: 100% 50%;
+	}
+}
+
+@-o-keyframes needle-tick {
+	0% {
+		-o-transform: rotate(0deg);
+		-o-transform-origin: 100% 50%;
+	}
+	100% {
+		-o-transform: rotate(90deg);
+		-o-transform-origin: 100% 50%;
+	}
+}
+
+@keyframes needle-tick {
+	0% {
+		transform: rotate(0deg);
+		transform-origin: 100% 50%;
+	}
+	100% {
+		transform: rotate(90deg);
+		transform-origin: 100% 50%;
+	}
+}
+
+.controls {
+	position: absolute;
+	bottom: 0px;
+	width: 100%;
+	text-align: center;
+	margin: 0px;
+	
+	color: #BCD;
+	font-size: 3em;
+	font-family: monospace;
+	
+	text-shadow: 1px 1px 1px #E6EEF7,
+				-1px -1px 1px #9AB;
+}
+
+.button {
+	cursor: pointer;
+	padding: 0 5% 1%;
+	z-index: 100;
+}
+
+.flash {
+	color: #9AB;
+	text-shadow: 0px 0px 5px #cedff0;
+	border-color: #cedff0;
+}
+
+.bpm-decrement {
+	position: absolute;
+	left: -1px;
+	bottom: 0px;
+	
+	border-bottom-left-radius: 10px;
+}
+.bpm-increment {
+	position: absolute;
+	right: -1px;
+	bottom: 0px;
+	
+	border-bottom-right-radius: 10px;
+}
+
+.bpm-display {
+	display: block;
+	position: absolute;
+	bottom: 0px;
+	width: 100%;
+}
+
+.bpm-display:before {
+	display: block;
+	content: "bpm";
+	font-size: 30%;
+	line-height: 100%;
+	text-shadow: none;
+}

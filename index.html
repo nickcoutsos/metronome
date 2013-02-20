@@ -1,0 +1,508 @@
+
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="description" content="Bringin' the beats to the browsers.">
+<title>Metronome</title>
+<style>html, body {
+	height: 100%;
+}
+
+body {
+	background: #89a;
+	font-family: sans-serif;
+	font-size: 16px;
+	margin: 0px;
+	padding: 0px;
+}
+
+#header {
+	margin: 0px;
+}
+
+#header h1 {
+	font-weight: lighter;
+	background: #eed;
+	border-bottom: 3px solid #444;
+	margin: 0px;
+	padding: 5px 10px;
+}
+
+#content {
+	overflow: hidden;
+	padding: 0px 10px;
+	margin: 0px;
+	border: none;
+}
+#content>p {
+	color: #eee;
+}
+
+#footer {
+	position: absolute;
+	bottom: 0px;
+	display: block;
+	width: 100%;
+	font-style: italic;
+	font-size: 9px;
+	text-align: center;
+	color: #555;
+	
+	background: -webkit-linear-gradient(bottom, #CDE 0%, #E6EEF7 70%);
+	background: -moz-linear-gradient(to top, #CDE 0%, #E6EEF7 70%);
+	background: -o-linear-gradient(bottom, #CDE 0%, #E6EEF7 70%);
+	background: linear-gradient(to top, #CDE 0%, #E6EEF7 70%);
+	
+	border-top: 2px solid #EFEFFF;
+	box-shadow: 0px 10px 40px -5px;
+}
+
+#footer a {
+	color: #558;
+}
+
+.metronome {
+	position: relative;
+	width: 275px;
+	height: 275px;
+	margin: 25px auto;
+	
+	background: -webkit-radial-gradient(25% 20%, ellipse cover, #E6EEF7 0%,#CDE 93%);
+	background: -moz-radial-gradient(25% 20%, ellipse cover, #E6EEF7 0%,#CDE 93%);
+	background: -o-radial-gradient(25% 20%, ellipse cover, #E6EEF7 0%,#CDE 93%);
+	background: radial-gradient(25% 20%, ellipse cover, #E6EEF7 0%,#CDE 93%);
+	
+	border-top: 1px solid #def;
+	border-left: 1px solid #def;
+	border-right: 1px solid #bcd;
+	border-bottom: 1px solid #bcd;
+	
+	-webkit-border-radius: 12px;
+	-moz-border-radius: 12px;
+	border-radius: 12px;
+	
+	box-shadow: 2px 2px 55px -10px;
+}
+
+.meter {
+	position: relative;
+	left: 50%;
+	top: -15%;
+	overflow: hidden;
+	
+	width: 60%;
+	height: 60%;
+	margin: 0px;
+	border: .3em solid #bcd;
+	
+	background: -webkit-radial-gradient(bottom right, circle cover, hsl(210, 14%, 82%), hsl(210, 14%, 64%) 70%);
+	background: -moz-radial-gradient(bottom right, circle cover, hsl(210, 14%, 82%), hsl(210, 14%, 64%) 70%);
+	background: -o-radial-gradient(bottom right, circle cover, hsl(210, 14%, 82%), hsl(210, 14%, 64%) 70%);
+	background: radial-gradient(bottom right, circle cover, hsl(210, 14%, 82%), hsl(210, 14%, 64%) 70%);
+	
+	-webkit-border-radius: 95% 0 0 0;
+	-webkit-transform: rotate(45deg);
+	-webkit-transform-origin: 0 0;
+	-webkit-box-shadow: 3px 3px 15px -5px inset;
+	
+	-moz-border-radius: 98% 0 0 0;
+	-moz-transform: rotate(45deg);
+	-moz-transform-origin: 0 0;
+	-moz-box-shadow: 3px 3px 15px -5px inset;
+	
+	-o-border-radius: 95% 0 0 0;
+	-o-transform: rotate(45deg);
+	-o-transform-origin: 0 0;
+	-o-box-shadow: 3px 3px 15px -5px inset;
+	
+	border-radius: 98% 0 0 0;
+	transform: rotate(45deg);
+	transform-origin: 0 0;
+	box-shadow: .3em .3em 1.3em -.4em inset;
+}
+
+.needle {
+	display: none;
+	position: absolute;
+	bottom: -3px;
+	right: 0px;
+	
+	background: gray;
+	width: 95%;
+	height: 6px;
+	border-left: 2px solid #FFAA00;
+}
+
+.needle-beat {
+	background: #FF0000;
+}
+
+.needle-animating {
+	display: block;
+	
+	-webkit-animation-name: needle-tick;
+	-webkit-animation-duration: 1.5s;
+	-webkit-animation-direction: alternate;
+	-webkit-animation-play-state: running;
+	-webkit-animation-iteration-count: infinite;
+	-webkit-animation-timing-function: ease-in-out;
+	
+	-moz-animation-name: needle-tick;
+	-moz-animation-duration: 1.5s;
+	-moz-animation-direction: alternate;
+	-moz-animation-play-state: running;
+	-moz-animation-iteration-count: infinite;
+	-moz-animation-timing-function: ease-in-out;
+	
+	-o-animation-name: needle-tick;
+	-o-animation-duration: 1.5s;
+	-o-animation-direction: alternate;
+	-o-animation-play-state: running;
+	-o-animation-iteration-count: infinite;
+	-o-animation-timing-function: ease-in-out;
+	
+	animation-name: needle-tick;
+	animation-duration: 1.5s;
+	animation-direction: alternate;
+	animation-play-state: running;
+	animation-iteration-count: infinite;
+	animation-timing-function: ease-in-out;
+}
+
+@-webkit-keyframes needle-tick {
+	0% {
+		-webkit-transform: rotate(0deg);
+		-webkit-transform-origin: 100% 50%;
+	}
+	100% {
+		-webkit-transform: rotate(90deg);
+		-webkit-transform-origin: 100% 50%;
+	}
+}
+
+@-moz-keyframes needle-tick {
+	0% {
+		-moz-transform: rotate(0deg);
+		-moz-transform-origin: 100% 50%;
+	}
+	100% {
+		-moz-transform: rotate(90deg);
+		-moz-transform-origin: 100% 50%;
+	}
+}
+
+@-o-keyframes needle-tick {
+	0% {
+		-o-transform: rotate(0deg);
+		-o-transform-origin: 100% 50%;
+	}
+	100% {
+		-o-transform: rotate(90deg);
+		-o-transform-origin: 100% 50%;
+	}
+}
+
+@keyframes needle-tick {
+	0% {
+		transform: rotate(0deg);
+		transform-origin: 100% 50%;
+	}
+	100% {
+		transform: rotate(90deg);
+		transform-origin: 100% 50%;
+	}
+}
+
+.controls {
+	position: absolute;
+	bottom: 0px;
+	width: 100%;
+	text-align: center;
+	margin: 0px;
+	
+	color: #BCD;
+	font-size: 3em;
+	font-family: monospace;
+	
+	text-shadow: 1px 1px 1px #E6EEF7,
+				-1px -1px 1px #9AB;
+}
+
+.button {
+	cursor: pointer;
+	padding: 0 5% 1%;
+	z-index: 100;
+}
+
+.flash {
+	color: #9AB;
+	text-shadow: 0px 0px 5px #cedff0;
+	border-color: #cedff0;
+}
+
+.bpm-decrement {
+	position: absolute;
+	left: -1px;
+	bottom: 0px;
+	
+	border-bottom-left-radius: 10px;
+}
+.bpm-increment {
+	position: absolute;
+	right: -1px;
+	bottom: 0px;
+	
+	border-bottom-right-radius: 10px;
+}
+
+.bpm-display {
+	display: block;
+	position: absolute;
+	bottom: 0px;
+	width: 100%;
+}
+
+.bpm-display:before {
+	display: block;
+	content: "bpm";
+	font-size: 30%;
+	line-height: 100%;
+	text-shadow: none;
+}
+</style>
+<script src="http://html5man.com/jslibs/puredom.js"></script>
+</head>
+<body>
+<html>
+	<body>
+		<div id="header">
+			<h1>Metronome!</h1>
+		</div>
+		<div id="content">
+			<p>Increase or decrease BPM with the (<code>+</code>/<code>-</code>), (<code>&lt;left arrow&gt;</code>/<code>&lt;right arrow&gt;</code>) keys, or mousewheel. Start/stop the metronome with <code>&lt;space&gt;</code> or by clicking on the metronome.</p>
+			<p>Hold <code>&lt;shift&gt;</code> while to shift by 10bpm at a time instead of one.</p>
+			<div class="metronome">
+				<div class="meter">
+					<div class="needle">
+					</div>
+				</div>
+					<p class="controls">
+						<span class="button bpm-decrement">-</span>
+						<span class="bpm-display">0</span>
+						<span class="button bpm-increment">+</span>
+					</p>
+			</div>
+		</div>
+		
+		<div id="footer">
+			<p>.</p>
+		</div>
+	</body>
+</html>
+<script>Metronome = function() {};
+puredom.extend(Metronome.prototype, {
+	
+	init: function(selector, bpm, sfx_url){
+		this.selector = selector;
+		this.metronome = puredom(this.selector);
+		this.bpm = bpm || 60;
+		this._sfx = {
+			tick: new Audio(),
+			tock: new Audio()
+		};
+		
+		this._sfx.tick.src = "";
+		this._sfx.tock.src = "";
+		this._sfx.tick.preload = 'auto';
+		this._sfx.tock.preload = 'auto';
+		
+		this._interval = null;
+		this._beats = 0;
+		
+		that = this;
+		this.metronome.query('.meter').addEvent('click', function(){that.toggle()});
+		this.metronome.query('.bpm-increment').addEvent('click', function(){that.increment()});
+		this.metronome.query('.bpm-decrement').addEvent('click', function(){that.decrement()});
+		puredom(document).on('keyDown', function(e){
+			var amount = 1;
+			if (e.shiftKey) {
+				amount = 10;
+			}
+			
+			if (e.keyCode == 187 || e.keyCode == 39) {
+				that.increment(amount);
+			} else if (e.keyCode == 189 || e.keyCode == 37) {
+				that.decrement(amount);
+			} else if (e.keyCode == 32) {
+				that.toggle();
+			}
+		});
+		
+		puredom(window).on('blur', function(e) { that.stop(); });
+		this.metronome.on('mousewheel', function(e) {
+			var amount = 1;
+			if (e.shiftKey) {
+				amount = 10;
+			}
+			if (Math.abs(e.wheelDeltaY) > Math.abs(e.wheelDeltaX)){ 
+				if (e.wheelDeltaY > 0) {
+					that.increment(amount);
+				}
+				else {
+					that.decrement(amount);
+				}
+			}
+		});
+		
+		this._on_bpm_update();
+	},
+	
+	increment: function(amount) {
+		var amount = amount || 1;
+		if (this.bpm < 200) {
+			this.bpm = Math.min(200, this.bpm + amount);
+			this._on_bpm_update();
+		}
+		
+		var self = this;
+		this.metronome.query('.bpm-increment').classify('flash');
+		setTimeout(function(){
+			self.metronome.query('.bpm-increment').declassify('flash');
+		}, 100);
+	},
+	
+	decrement: function(amount) {
+		var amount = amount || 1;
+		if (this.bpm > 1) {
+			this.bpm = Math.max(1, this.bpm - amount);
+			this._on_bpm_update();
+		}
+		
+		var self = this;
+		this.metronome.query('.bpm-decrement').classify('flash');
+		setTimeout(function(){
+			self.metronome.query('.bpm-decrement').declassify('flash');
+		}, 100);
+	},
+	
+	seconds_per_beat: function() {
+		return 60 / this.bpm;
+	},
+	
+	running: function() {
+		return this._interval != null;
+	},
+	
+	_on_bpm_update: function() {
+		var duration = this.seconds_per_beat() + 's';
+		
+		this.metronome.query('.bpm-display').text(this.bpm);
+		puredom('.needle').css({
+			'-webkit-animation-duration': duration,
+			'-moz-animation-duration': duration,
+			'-o-animation-duration': duration,
+			'animation-duration': duration
+		});
+		
+		if (this.running()) {
+			var self = this;
+			this.stop();
+			setTimeout(function() {
+				self.start();			
+				self = null;
+			},100);
+
+		}
+	},
+	
+	_beat: function() {
+		if (this._beats % 2 == 0) {
+			//this._sfx.tick.currentTime = 0.0885;
+			//this._sfx.tick.play();
+		} else {
+			//this._sfx.tock.currentTime = 0.0705;
+			//this._sfx.tock.play();
+		}
+		
+		
+		this.metronome.query('.needle')
+			.css({'background': '#FF0000'})
+			.css({'background': 'gray'},
+				 {'tween': this.seconds_per_beat() * 500});
+		
+		this._beats++;
+	},
+	
+	toggle: function() {
+		if (!this.running()) {
+			this.start();
+		} else {
+			this.stop();
+		}
+	},
+			
+	start: function() {
+		this._beats = 0;
+		
+		needle = this.metronome.query('.needle');
+		needle.classify('needle-animating');
+		
+		that = this;
+		this._interval = setInterval(function(){that._beat();}, this.seconds_per_beat() * 1000);
+	},
+	
+	stop: function() {
+		if (this.running()) {
+			needle = this.metronome.query('.needle');
+			needle.declassify('needle-animating');
+			
+			clearInterval(this._interval);
+			this._interval = null;
+		}
+	}
+});
+
+function set_metronome_size() {
+	var content = puredom('#content');
+	var metronome = content.query('.metronome');
+	
+	var c_width = content.width({padding:false, margin:false, border:false});
+	var c_height = content.height();
+	var available_length = Math.min(c_width - 40, c_height - metronome.y());
+	
+	metronome.css({
+		'height': available_length + 'px',
+		'width': available_length + 'px'
+	});
+	
+	metronome.query('.controls').css({
+		'height': available_length / 7 + 'px',
+		'line-height': available_length / 7 + 'px',
+		'font-size': available_length / 7 + 'px'
+	});
+}
+
+function set_content_size() {
+	window_height = puredom('body').height();
+	header_height = puredom('#header').height({border:true, padding:true, margin:true});
+	footer_height = puredom('#footer').height({border:true, padding:true});
+	
+	new_height = window_height - header_height - footer_height;
+	
+	puredom('#content').css({'height': new_height + 'px'});
+	
+	set_metronome_size();
+}
+
+metronome = {};
+puredom(function(){
+	metronome = new Metronome();
+	metronome.init('.metronome', 90);
+	set_content_size();
+});
+
+puredom(window).on('resize', set_content_size);</script>
+</body>
+</html>
+
