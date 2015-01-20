@@ -430,6 +430,21 @@ puredom.extend(Metronome.prototype, {
 			.css({'background': '#FF0000'})
 			.css({'background': 'gray'},
 				 {'tween': this.seconds_per_beat() * 500});
+
+		this.metronome.query('.meter')
+			.animate(function(f) {
+				var saturation = Math.round((1 - f) * 45 + 14),
+					hsl_inner = 'hsl(210, ' + saturation + '%, ' + ((1 - f) * 5 + 82) + '%)'
+					hsl_outer = 'hsl(210, ' + saturation + '%, ' + ((1 - f) * 20 + 64) + '%)',
+					gradient = (
+						'(bottom right, circle cover, '
+						+ hsl_inner + ', '
+						+ hsl_outer + ' 70%)'
+					);
+				
+				this.css({'background': '-webkit-radial-gradient' + gradient});
+				
+			}, this.seconds_per_beat() * 500, 'ease');
 		
 		this._beats++;
 	},
@@ -445,8 +460,7 @@ puredom.extend(Metronome.prototype, {
 	start: function() {
 		this._beats = 0;
 		
-		needle = this.metronome.query('.needle');
-		needle.classify('needle-animating');
+		this.metronome.query('.needle').classify('needle-animating');
 		
 		that = this;
 		this._interval = setInterval(function(){that._beat();}, this.seconds_per_beat() * 1000);
@@ -454,8 +468,7 @@ puredom.extend(Metronome.prototype, {
 	
 	stop: function() {
 		if (this.running()) {
-			needle = this.metronome.query('.needle');
-			needle.declassify('needle-animating');
+			this.metronome.query('.needle').declassify('needle-animating');
 			
 			clearInterval(this._interval);
 			this._interval = null;
